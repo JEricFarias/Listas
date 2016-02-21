@@ -25,6 +25,8 @@ public class Pilha {
     }
     
     public void add(int valor){
+        //1 ponto: o código fica mais elegante assim: this.index < this.array.length stackoverflow
+        //2 ponto: falta validar: valor < 0 || valor > array.length (AIOBEx)
         if(this.index <= this.array.length - 1){
             this.array[this.index] = valor;
             this.index++;
@@ -36,11 +38,14 @@ public class Pilha {
     
     public int pegar(){
         int valor = this.array[this.index];
-        this.array[this.index] = 0;
+        this.array[this.index] = 0; 
         this.index--;
         return valor;
     }
     
+    //no lugar de criar métodos de max e min, pois cada um deles é O(n)
+    //melhor seria controlar o max e min no momento da inserção, o que tornaria
+    //os métodos de max e min O(1)
     public int maxValue(){
         int max = Integer.MIN_VALUE;
         for(int value: this.array){
