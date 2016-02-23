@@ -52,6 +52,7 @@ public class Pilha {
         int valor = this.array[this.index];
         this.array[this.index] = 0; 
         this.index--;
+        this.update();
         return valor;
     }
     
