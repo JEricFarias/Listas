@@ -27,7 +27,11 @@ public class Pilha {
     }
     
     public Pilha(int size){
-        this.array = new int[size];
+        if(size > 0){
+            this.array = new int[size];
+        }else{
+            throw new NegativeArraySizeException("Tamnho de arrays tem que ser maior que zero");
+        }
         this.index = 0;
         // quando o objeto é criado o maior valor esta no array indice 0(zero);
         this.indexMaxValue = 0;
