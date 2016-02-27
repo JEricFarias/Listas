@@ -6,80 +6,104 @@
 package Listas;
 
 /**
- *
+ * Inplementa uma pilha de tamanho fixo 16 ou tamnho n especificado pelo usuário.
  * @author Eric Farias
+ * @since 27/02/2016
  */
 
 public class Pilha {
     private int []array;
     private int index;
-    private int maxValue;
-    private int minValue;
+    private int indexMaxValue;
+    private int indexMinValue;
     
     public Pilha(){
         this.array = new int[16];
         this.index = 0;
-        this.maxValue = Integer.MIN_VALUE;
-        this.minValue = Integer.MAX_VALUE;
+        // quando o objeto é criado o maior valor esta no array indice 0(zero);
+        this.indexMaxValue = 0;
+        // quando o objeto é criado o maior valor esta no array indice 0(zero);
+        this.indexMinValue = 0;
     }
     
     public Pilha(int size){
         this.array = new int[size];
         this.index = 0;
-        this.maxValue = Integer.MIN_VALUE;
-        this.minValue = Integer.MAX_VALUE;
+        // quando o objeto é criado o maior valor esta no array indice 0(zero);
+        this.indexMaxValue = 0;
+        // quando o objeto é criado o maior valor esta no array indice 0(zero);
+        this.indexMinValue = 0;
     }
     
     public void add(int valor){
-        //OK 1 ponto: o código fica mais elegante assim: this.index < this.array.length stackoverflow
-        //o valor pode assumir valores negativos, não? 2 ponto: falta validar: valor < 0 || valor > array.length (AIOBEx)
         if(this.index < this.array.length){
             this.array[this.index] = valor;
-            if(valor > this.maxValue){
-                this.setMaxValue(valor);
+            if(valor > this.indexMaxValue){
+                this.setIndexMaxValue(this.index);
             }
-            if(valor < minValue){
-                this.setMinValue(valor);
+            if(valor < indexMinValue){
+                this.setIndexMinValue(this.index);
             }
             this.index++;
         }else{
             // add método para almentar dinamicamente o array
-            System.out.print("A operação não pode ser realizada pois a pilha encontra-se cheia!");
+            throw new StackOverflowError("A operação não pode ser realizada pois a pilha encontra-se cheia!");
         }
     }
     
-    public int pegar(){
+    public int remove(){
         int valor = this.array[this.index];
-        this.array[this.index] = 0; 
-        this.index--;
+        this.array[this.index] = 0;
+        if(this.index == this.indexMaxValue){
+            updateIndexMaxValue();
+        }
+        if(this.index == this.indexMinValue){
+            updateIndexMinValue();
+        }
+        if(this.index > 0){
+            this.index--;
+        }else{
+            System.out.println("ultimo valor retirado!");
+        }
         return valor;
     }
     
-    public int primeiroValor(){
+    public int getFirstValue(){
         return this.array[0];
     }
     
-    public void setMaxValue(int v){
-        this.maxValue = v;
+    public int getMaxValue(){
+        return this.array[this.indexMaxValue];
     }
     
-    public void setMinValue(int v){
-        this.minValue = v;
+    public int getMinValue(){
+        return this.array[this.indexMinValue];
+    }
+    
+    public void setIndexMaxValue(int v){
+        this.indexMaxValue = v;
+    }
+    
+    public void setIndexMinValue(int v){
+        this.indexMinValue = v;
     }
     
     /*
         Retirei os metodos max e min, mas agora se o valor max ou min forem retirados não tem com atualizar o novo valor.
         Então reiniciei os valores, criei um metodo update que busca na pilha so ate o indice e preenche os dois atributos.
      */
-    private void update(){
-        this.setMaxValue(Integer.MIN_VALUE);
-        this.setMinValue(Integer.MAX_VALUE);
-        for(int i = 0; i < this.index; i++){
-            if(this.array[i] > this.maxValue){
-                this.setMaxValue(this.array[i]);
+    private void updateIndexMaxValue(){
+        for(int i = 0; i < --this.index; i++){
+            if(this.array[i] > this.array[this.indexMaxValue]){
+                this.setIndexMaxValue(i);
             }
-            if(this.array[i] < this.minValue){
-                this.setMinValue(this.array[i]);
+        }
+    }
+    
+    private void updateIndexMinValue(){
+        for(int i = 0; i < --this.index; i++){
+            if(this.array[i] < this.array[this.indexMinValue]){
+                this.setIndexMinValue(i);
             }
         }
     }
