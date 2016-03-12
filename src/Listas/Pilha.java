@@ -11,7 +11,7 @@ package Listas;
  * @since 27/02/2016
  */
 
-public class Pilha<T extends Comparable> {
+public class Pilha<T> {
     private T[] array;
     private int index;
     private int indexMaxValue;
