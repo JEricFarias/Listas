@@ -11,42 +11,53 @@ package Listas;
  * @since 27/02/2016
  */
 
-public class Pilha {
-    private int []array;
+public class Pilha<T extends Comparable> {
+    private T[] array;
     private int index;
     private int indexMaxValue;
     private int indexMinValue;
+    public static final byte MAIOR_QUE = 1;
+    public static final byte IGUAL_A = 0;
+    public static final byte MENOR_QUE = -1;
     
     public Pilha(){
-        this.array = new int[16];
+        this.array = (T[]) new Object[16];
         this.index = -1;
         // quando o objeto é criado o maior valor esta no array indice 0(zero);
         this.indexMaxValue = 0;
-        // quando o objeto é criado o maior valor esta no array indice 0(zero);
+        // quando o objeto é criado o menor valor esta no array indice 0(zero);
         this.indexMinValue = 0;
     }
     
     public Pilha(int size){
-        if(size > 0){
-            this.array = new int[size];
+        if(size >= 0){
+            this.array = (T[]) new Object[size];
         }else{
             throw new NegativeArraySizeException("Tamnho de arrays tem que ser maior que zero");
         }
         this.index = -1;
         // quando o objeto é criado o maior valor esta no array indice 0(zero);
         this.indexMaxValue = 0;
-        // quando o objeto é criado o maior valor esta no array indice 0(zero);
+        // quando o objeto é criado o menor valor esta no array indice 0(zero);
         this.indexMinValue = 0;
     }
     
-    public void add(int valor){
+    public void add(T valor){
         this.index++;
         if(this.index < this.array.length){
+            // Se o valor for null lança um Exception
+            if(valor == null)
+               throw new NullPointerException();
+            
             this.array[this.index] = valor;
-            if(valor > this.array[this.indexMaxValue]){
+            //Se valor for maior que o valor contido no vetor na posição maior
+            if(valor.compareTo(this.array[this.indexMaxValue]) == MAIOR_QUE){
+                //troca o indice que represena o maior
                 this.setIndexMaxValue(this.index);
             }
-            if(valor < this.array[this.indexMinValue]){
+            // Se o valor for menor que o valor contido no vetor na posição menor
+            if(valor.compareTo(this.array[this.indexMinValue]) == MENOR_QUE){
+                //troca o indice que represena o menor
                 this.setIndexMinValue(this.index);
             }
         }else{
@@ -55,8 +66,8 @@ public class Pilha {
         }
     }
     
-    public int remove(){
-        int valor = this.array[this.index];
+    public Object remove(){
+        Object valor = this.array[this.index];
         this.array[this.index] = 0;
         if(this.index == this.indexMaxValue){
             updateIndexMaxValue();
@@ -101,9 +112,9 @@ public class Pilha {
         Então reiniciei os valores, criei um metodo update que busca na pilha so ate o indice e preenche os dois atributos.
      */
     private void updateIndexMaxValue(){
-        int max = Integer.MIN_VALUE;
+         max = this.array[0];
         for(int i = 0; i < this.index; i++){
-            if(this.array[i] > max){
+            if(max.compareTo(this.array[i]) == MAIOR_QUE){
                 max = this.array[i];
                 this.setIndexMaxValue(i);
             }

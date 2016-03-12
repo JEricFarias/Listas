@@ -10,7 +10,8 @@ import org.junit.Test;
 
 /**
  *
- * @author eide
+ * @author Eric Farias
+ * @since 27/02/2016
  */
 public class PilhaTest {
     
