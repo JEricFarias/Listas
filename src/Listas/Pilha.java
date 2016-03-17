@@ -6,12 +6,12 @@
 package Listas;
 
 /**
- * Inplementa uma pilha de tamanho fixo 16 ou tamnho n especificado pelo usuário.
+ * Inplementa uma pilha de tipo T(generico) com um tamanho fixo 16 ou tamnho n especificado pelo usuário.
  * @author Eric Farias
  * @since 27/02/2016
+ * @param <T> é uma classe qualquer que implementa a interface Comaprable
  */
-
-public class Pilha<T> {
+public class Pilha<T extends Comparable> {
     private T[] array;
     private int index;
     private int indexMaxValue;
@@ -66,16 +66,16 @@ public class Pilha<T> {
         }
     }
     
-    public Object remove(){
+    public <T> Object remove(){
         Object valor = this.array[this.index];
-        this.array[this.index] = 0;
+        this.array[this.index] = null;
         if(this.index == this.indexMaxValue){
             updateIndexMaxValue();
         }
         if(this.index == this.indexMinValue){
             updateIndexMinValue();
         }
-        if(this.index > 0){
+        if(this.index >= 0){
             this.index--;
         }else{
             System.out.println("ultimo valor retirado!");
@@ -83,15 +83,15 @@ public class Pilha<T> {
         return valor;
     }
     
-    public int getFirstValue(){
+    public Object getFirstValue(){
         return this.array[0];
     }
     
-    public int getMaxValue(){
+    public Object getMaxValue(){
         return this.array[this.indexMaxValue];
     }
     
-    public int getMinValue(){
+    public Object getMinValue(){
         return this.array[this.indexMinValue];
     }
     
@@ -112,9 +112,9 @@ public class Pilha<T> {
         Então reiniciei os valores, criei um metodo update que busca na pilha so ate o indice e preenche os dois atributos.
      */
     private void updateIndexMaxValue(){
-         max = this.array[0];
+        T max = this.array[0];
         for(int i = 0; i < this.index; i++){
-            if(max.compareTo(this.array[i]) == MAIOR_QUE){
+            if(max.compareTo(this.array[i]) > 0){
                 max = this.array[i];
                 this.setIndexMaxValue(i);
             }
@@ -122,9 +122,9 @@ public class Pilha<T> {
     }
     
     private void updateIndexMinValue(){
-        int min = Integer.MAX_VALUE;
+        T min = this.array[0];
         for(int i = 0; i < this.index; i++){
-            if(this.array[i] < min){
+            if(min.compareTo(this.array[i]) < 0){
                 min = this.array[i];
                 this.setIndexMinValue(i);
             }
