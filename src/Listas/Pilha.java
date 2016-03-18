@@ -5,6 +5,8 @@
  */
 package Listas;
 
+import java.lang.reflect.Array;
+
 /**
  * Inplementa uma pilha de tipo T(generico) com um tamanho fixo 16 ou tamnho n especificado pelo usuário.
  * @author Eric Farias
@@ -27,9 +29,13 @@ public class Pilha<T extends Comparable> {
         this.indexMinValue = 0;
     }
     
+    public Pilha(Class<T[]> type, int size){
+        this.array = type.cast(Array.newInstance(type.getComponentType(), size));
+    }
     public Pilha(int size){
+        this(T[].class, size); // ageitar isso...
         if(size >= 0){
-            this.array = (T[]) new Object[size];
+            
         }else{
             throw new NegativeArraySizeException("Tamnho de arrays tem que ser maior que zero");
         }
@@ -80,15 +86,15 @@ public class Pilha<T extends Comparable> {
         return valor;
     }
     
-    public Object getFirstValue(){
+    public T getFirstValue(){
         return this.array[0];
     }
     
-    public Object getMaxValue(){
+    public T getMaxValue(){
         return this.array[this.indexMaxValue];
     }
     
-    public Object getMinValue(){
+    public T getMinValue(){
         return this.array[this.indexMinValue];
     }
     
