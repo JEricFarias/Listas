@@ -16,9 +16,7 @@ public class Pilha<T extends Comparable> {
     private int index;
     private int indexMaxValue;
     private int indexMinValue;
-    public static final byte MAIOR_QUE = 1;
-    public static final byte IGUAL_A = 0;
-    public static final byte MENOR_QUE = -1;
+   
     
     public Pilha(){
         this.array = (T[]) new Object[16];
@@ -51,12 +49,12 @@ public class Pilha<T extends Comparable> {
             
             this.array[this.index] = valor;
             //Se valor for maior que o valor contido no vetor na posição maior
-            if(valor.compareTo(this.array[this.indexMaxValue]) == MAIOR_QUE){
+            if(valor.compareTo(this.array[this.indexMaxValue]) > 0){
                 //troca o indice que represena o maior
                 this.setIndexMaxValue(this.index);
             }
             // Se o valor for menor que o valor contido no vetor na posição menor
-            if(valor.compareTo(this.array[this.indexMinValue]) == MENOR_QUE){
+            if(valor.compareTo(this.array[this.indexMinValue]) < 0){
                 //troca o indice que represena o menor
                 this.setIndexMinValue(this.index);
             }
@@ -70,10 +68,9 @@ public class Pilha<T extends Comparable> {
         Object valor = this.array[this.index];
         this.array[this.index] = null;
         if(this.index == this.indexMaxValue){
-            updateIndexMaxValue();
-        }
-        if(this.index == this.indexMinValue){
-            updateIndexMinValue();
+            updateIndex();
+        } else if(this.index == this.indexMinValue){
+            updateIndex();
         }
         if(this.index >= 0){
             this.index--;
@@ -111,19 +108,16 @@ public class Pilha<T extends Comparable> {
         Retirei os metodos max e min, mas agora se o valor max ou min forem retirados não tem com atualizar o novo valor.
         Então reiniciei os valores, criei um metodo update que busca na pilha so ate o indice e preenche os dois atributos.
      */
-    private void updateIndexMaxValue(){
+    private void updateIndex(){
         T max = this.array[0];
+        T min = this.array[0];
         for(int i = 0; i < this.index; i++){
+            // Update valor maximo
             if(max.compareTo(this.array[i]) > 0){
                 max = this.array[i];
                 this.setIndexMaxValue(i);
             }
-        }
-    }
-    
-    private void updateIndexMinValue(){
-        T min = this.array[0];
-        for(int i = 0; i < this.index; i++){
+            // Update valor minimo
             if(min.compareTo(this.array[i]) < 0){
                 min = this.array[i];
                 this.setIndexMinValue(i);
