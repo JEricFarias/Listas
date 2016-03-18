@@ -1,7 +1,7 @@
 #Listas
 
-Implementação de listas do tipo pilha de inteiros, mas futuramene ira ser de uso geral.
+Implementação de listas do tipo pilha de uso generico.
+para usar a calsse é necessário que o a classe do objeto que será amarzenado implemente a iterface Comprable.
 
-#IMPORTANTE!
-
-Códigos de terceiros não serão comitados pois esse resitório será usado pra estudos presentes e futuros.
+#Melhorar
+- fazer apenas um metodo de update de valores max e min. 
