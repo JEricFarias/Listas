@@ -5,7 +5,6 @@
  */
 package Listas;
 
-import java.lang.reflect.Array;
 
 /**
  * Inplementa uma pilha de tipo T(generico) com um tamanho fixo 16 ou tamnho n especificado pelo usuário.
@@ -13,13 +12,13 @@ import java.lang.reflect.Array;
  * @since 27/02/2016
  * @param <T> é uma classe qualquer que implementa a interface Comaprable
  */
-public class Pilha<T extends Comparable> {
-    private T[] array;
+public class Pilha<T extends Comparable>{
+    private final T[] array;
     private int index;
     private int indexMaxValue;
     private int indexMinValue;
    
-    
+    @SuppressWarnings("unchecked")
     public Pilha(){
         this.array = (T[]) new Object[16];
         this.index = -1;
@@ -29,13 +28,10 @@ public class Pilha<T extends Comparable> {
         this.indexMinValue = 0;
     }
     
-    public Pilha(Class<T[]> type, int size){
-        this.array = type.cast(Array.newInstance(type.getComponentType(), size));
-    }
+    @SuppressWarnings("unchecked")
     public Pilha(int size){
-        this(T[].class, size); // ageitar isso...
         if(size >= 0){
-            
+            this.array = (T[]) new Object[size];
         }else{
             throw new NegativeArraySizeException("Tamnho de arrays tem que ser maior que zero");
         }

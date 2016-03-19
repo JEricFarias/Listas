@@ -55,12 +55,18 @@ public class Aluno implements Comparable{
         return 0;
     }
     
+    @Override
+    public String toString(){
+        return String.format("Max... Matricula: %d Nome: %s\n", getMatricula(), getNome());
+    }
+    
     public static void main(String[] args) {
-        Pilha<Aluno> Alunos = new Pilha<>(20);
-        Alunos.add(new Aluno(151014901,"Eric Farias","ADS"));
-        Alunos.add(new Aluno(161014901,"Evilania Farias","ADS"));
+        Pilha<Aluno> alunos = new Pilha<>(20);
+        alunos.add(new Aluno(151014901,"Eric Farias","ADS"));
+        alunos.add(new Aluno(161014901,"Evilania Farias","ADS"));
         
-        System.out.printf("Max... Matricula: %d Nome: %s\n", Alunos.getMaxValue().getMatricula(), Alunos.getMaxValue().getNome());
-        System.out.printf("Max... Matricula: %d Nome: %s\n", Alunos.getMinValue().getMatricula(), Alunos.getMinValue().getNome());
+        System.out.printf("Max... Matricula: %d Nome: %s\n", alunos.getMaxValue().getMatricula(), alunos.getMaxValue().getNome());
+        System.out.printf("Min... Matricula: %d Nome: %s\n", alunos.getMinValue().getMatricula(), alunos.getMinValue().getNome());
+        System.out.println(alunos.getMaxValue());
     }
 }
